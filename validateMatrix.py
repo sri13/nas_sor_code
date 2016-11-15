@@ -56,6 +56,6 @@ def spectral_radius_convergence_check(matrix_a):
     radius=np.linalg.eigvals(matrix_c).max()
 #    print(radius)
     
-    if radius < 1:
-        return False
-    return True
+    if radius <= 1:
+        return True
+    return False
