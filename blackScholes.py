@@ -19,7 +19,7 @@ def put_Black_Scholes(X=10, N=100, M=150, T=30, std=0.3, r=0.02, X_to_Smax = 0.5
     X_to_Smax is the ratio of X to SMax, must obey 0 < x_to_smax <= 1
     X_to_Smax determines how many zero values are in b initially
     """
-    k = T / M
+    k = T / (M * 250) #assuming 250 trading days a year
     A = set_A(N, k, std, r) #A stays constant throughout
     alignment = set_alignment(X, k, r, std) #add this constant to b[0] at every timestep
     b = init_b(X, N, X_to_Smax, alignment) #first value of b at timestep M-1
