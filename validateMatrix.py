@@ -4,6 +4,7 @@
 """
 import numpy as np
 
+
 def non_zero_diagonal_check(matrix_a,dimension_n):
     for counter in range(dimension_n):
         if(matrix_a[counter,counter]==0.0):
@@ -37,3 +38,24 @@ def col_diagonally_dominant(matrix_a,dimension_n):
         if (abs(matrix_a[col_counter,col_counter])> sum):
             return True
     return False
+    
+def spectral_radius_convergence_check(matrix_a):
+    
+    matrix_l=np.tril(matrix_a, k=-1)
+    matrix_u=np.triu(matrix_a, k=-1)
+    matrix_d=np.diag(np.diag(matrix_a))
+
+#    print(matrix_l, matrix_u, matrix_d)
+    
+
+#    print(np.linalg.inv(matrix_d+matrix_l) * -1)
+    
+    matrix_c = np.dot(-np.linalg.inv(matrix_d+matrix_l), matrix_u)
+#    print(matrix_c)
+    
+    radius=np.linalg.eigvals(matrix_c).max()
+#    print(radius)
+    
+    if radius < 1:
+        return False
+    return True

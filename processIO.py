@@ -17,9 +17,9 @@ def input(file_name="nas_Sor.in"):
         if(matrix_a.shape[0]!=dimension_n or matrix_a.shape[1]!=dimension_n):
             raise Exception('Incorrect File Format for A Matrix dimensions')
         
-        matrix_b=np.genfromtxt(file_name,skip_header=dimension_n+1)
-#        print("Matrix B :",matrix_b, "Shape:",matrix_b.shape)
-        if(matrix_b.shape[0]!=dimension_n):
+        vector_b=np.genfromtxt(file_name,skip_header=dimension_n+1)
+#        print("Matrix B :",vector_b, "Shape:",vector_b.shape)
+        if(vector_b.shape[0]!=dimension_n):
             raise Exception('Incorrect File Format for B Matrix Dimensions')
   
     except OSError:
@@ -34,7 +34,7 @@ def input(file_name="nas_Sor.in"):
             "Last Line should contain matrix B with n rows")
         sys.exit()
 
-    return (dimension_n,matrix_a,matrix_b)
+    return (dimension_n,matrix_a,vector_b)
     
 def output(stop_reason, max_it, num_it, x_tol, res_tol, matrix_x, file_name, \
             stop_cause='something has gone wrong'):

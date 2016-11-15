@@ -21,9 +21,9 @@ def main():
     try: 
         #Input Processing from input file
         if(len(sys.argv) >= 2):
-            [dimension_n,matrix_a,matrix_b] = processIO.input(sys.argv[1])
+            [dimension_n,matrix_a,vector_b] = processIO.input(sys.argv[1])
         else:
-            [dimension_n,matrix_a,matrix_b]=processIO.input()        
+            [dimension_n,matrix_a,vector_b]=processIO.input()        
         
         #Constants
         max_it = 50
@@ -50,15 +50,19 @@ def main():
         if((not validateMatrix.col_diagonally_dominant(matrix_a,dimension_n)) and \
             (not validateMatrix.row_diagonally_dominant(matrix_a,dimension_n))):
             raise Exception("Matrix A wont converge as it is not row / column diagonally dominant.",6)
-            
+       
+        if(not validateMatrix.spectral_radius_convergence_check(matrix_a)):
+            raise Exception("Spectral radius check failed for Matrix A.",6)
+        
+        
         #Dense SOR Calculation
-#       implementSOR.dense_SOR(matrix_a,matrix_b,dimension_n,max_it,w,matrix_x)
+#       implementSOR.dense_SOR(matrix_a,vector_b,dimension_n,max_it,w,matrix_x)
         
         #Sparse SOR Calculation
         csr_matrix_a = processIO.to_csr_format(matrix_a)
         
         [stop_reason, max_it, num_it, matrix_x ] = implementSOR.sparse_sor(csr_matrix_a, \
-        matrix_b, matrix_x, dimension_n, max_it, x_tol, res_tol, w )
+        vector_b, matrix_x, dimension_n, max_it, x_tol, res_tol, w )
         
         processIO.output(stop_reason, max_it, num_it, x_tol, res_tol, matrix_x,\
                 output_filename)           

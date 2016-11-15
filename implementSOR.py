@@ -65,25 +65,25 @@ def chk_converge(A, xnew, b, xold, x_seq_tol, res_tol, flag):
 
 
     
-def sparse_sor(matrix_a, matrix_b, matrix_x, dimension_n, max_it, \
-        x_tol, res_tol, w ):
+def sparse_sor(matrix_a, vector_b, matrix_x, dimension_n, max_it=50, \
+        x_tol=1e-13, res_tol=1e-13, w=1.25 ):
    
     num_it = 1
     stop_reason = 6 #something has gone wrong if this does not get overwritten later
     matrix_x_last_it = np.array([0.0])
     matrix_x_new = np.array(matrix_x)
     matrix_a_np = np.array(matrix_a)
-    matrix_b_np = np.array(matrix_b)
+    vector_b_np = np.array(vector_b)
     
     flag = True #required to enter while loop first time only
     
     while num_it <= max_it and \
-        chk_converge(matrix_a_np, matrix_x_new, matrix_b_np, matrix_x_last_it, 
+        chk_converge(matrix_a_np, matrix_x_new, vector_b_np, matrix_x_last_it, 
                      x_tol, res_tol, flag) == -1:
 
         flag = False        
         matrix_x_last_it = np.array(matrix_x_new[:])
-        for i in range(0,len(matrix_b)):
+        for i in range(0,len(vector_b)):
             sum = 0
             first_nz = matrix_a_np[1][(matrix_a_np[2][i]-1)] - 1 #pos of first non zero on row
             for j in range(matrix_a_np[2][i]-1, matrix_a_np[2][i+1]-1):
@@ -91,9 +91,9 @@ def sparse_sor(matrix_a, matrix_b, matrix_x, dimension_n, max_it, \
                             (matrix_a_np[2][i]-1) + first_nz]
                 if matrix_a_np[1][j] == i+1:
                     d = matrix_a[0][j]
-            matrix_x_new[i] = matrix_x_new[i] + w * (matrix_b_np[i] - sum) / d   
+            matrix_x_new[i] = matrix_x_new[i] + w * (vector_b_np[i] - sum) / d   
         num_it+=1
-    conv = chk_converge(matrix_a_np, matrix_x_new, matrix_b_np, matrix_x_last_it, \
+    conv = chk_converge(matrix_a_np, matrix_x_new, vector_b_np, matrix_x_last_it, \
                     x_tol, res_tol, False)
     if num_it-1 == max_it:
         stop_reason = 3
@@ -103,7 +103,7 @@ def sparse_sor(matrix_a, matrix_b, matrix_x, dimension_n, max_it, \
 #    set_output(stop_reason, max_it, num_it-1, x_tol, res_tol,matrix_x_new, )
     return (stop_reason, max_it, num_it-1, matrix_x_new )
     
-def dense_SOR(matrix_a,matrix_b,dimension_n,max_iteration,w,matrix_x):
+def dense_SOR(matrix_a,vector_b,dimension_n,max_iteration,w,matrix_x):
     print("Dense SOR Calculation")
     it_counter=0
     while(it_counter<=max_iteration):
@@ -111,7 +111,7 @@ def dense_SOR(matrix_a,matrix_b,dimension_n,max_iteration,w,matrix_x):
             sum=0.0
             for col_counter in range(dimension_n):
                 sum = sum + matrix_a[row_counter,col_counter]*matrix_x[col_counter]
-            matrix_x[row_counter]=matrix_x[row_counter]+w*(matrix_b[row_counter]-sum) \
+            matrix_x[row_counter]=matrix_x[row_counter]+w*(vector_b[row_counter]-sum) \
                                                 /matrix_a[row_counter,row_counter]
 #        print("Iteration: ",it_counter,"\n","X:",matrix_x)    
         it_counter+=1
