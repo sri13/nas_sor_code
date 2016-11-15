@@ -42,7 +42,7 @@ def col_diagonally_dominant(matrix_a,dimension_n):
 def spectral_radius_convergence_check(matrix_a):
     
     matrix_l=np.tril(matrix_a, k=-1)
-    matrix_u=np.triu(matrix_a, k=-1)
+    matrix_u=np.triu(matrix_a, k=1)
     matrix_d=np.diag(np.diag(matrix_a))
 
 #    print(matrix_l, matrix_u, matrix_d)
