@@ -15,7 +15,6 @@ import processIO
 import implementSOR
 import validateMatrix
 
-
 def main():
     
     try: 

@@ -5,7 +5,7 @@
 
 
 from math import ceil
-#from mpl_toolkits.mplot3d import axes3d
+from mpl_toolkits.mplot3d import axes3d
 import matplotlib.pyplot as plt
 import numpy as np
 import implementSOR
@@ -23,7 +23,7 @@ def put_Black_Scholes(X=10, N=100, M=150, T=30, std=0.3, r=0.02, X_to_Smax = 0.5
     A = set_A(N, k, std, r) #A stays constant throughout
     alignment = set_alignment(X, k, r, std) #add this constant to b[0] at every timestep
     b = init_b(X, N, X_to_Smax, alignment) #first value of b at timestep M-1
- #   print(b)
+#    print(b)
 
     #Prepare stock price, timestep axes (x and y axes in the wireframe)    
     S_axis = []
@@ -45,9 +45,10 @@ def put_Black_Scholes(X=10, N=100, M=150, T=30, std=0.3, r=0.02, X_to_Smax = 0.5
     The option value at this timestep is set to b for next timestep
     This is the z-axis in the wireframe
     """    
+    
     Value_axis = []
     for i in range(0, M-1):
-        b = implementSOR.sparse_sor(A, b)
+        [stop_reason, max_it, num_it, b ] = implementSOR.sparse_sor(A, b,np.zeros(len(b)),len(b))
         Value_axis.append(b) #add calculated value pre-alignment
         b[0]+=alignment #this is vector b for the next timestep
 #    print(Value_axis)       
