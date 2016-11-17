@@ -61,8 +61,11 @@ def spectral_radius_convergence_check(matrix_a, w=1.25):
     
     matrix_c = np.dot(np.linalg.inv(matrix_d+matrix_wl), (matrix_dw - (w * matrix_u)))
     
-    radius=np.linalg.eigvals(matrix_c).max()
+#    radius=np.linalg.eigvals(matrix_c).max()
 #    print(radius)
+
+    #spectral radius is maximum eigenvalue in absolute terms
+    radius=np.absolute(np.linalg.eigvals(matrix_c)).max()
     
     if radius < 1:
         return True
