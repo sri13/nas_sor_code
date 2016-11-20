@@ -1,6 +1,12 @@
 # -*- coding: utf-8 -*-
 """
+How to Execute:
+python blackScholes.py
 
+Authors:
+Niall Daly
+Ronan Mc.Donagh
+Srikanth Tiyyagura
 """
 
 
@@ -96,7 +102,6 @@ def init_b(X, N, X_to_Smax, alignment):
     for j in range(N_threshold, N-1):
         b.append(0)
     return b
-
 
 
 #put_Black_Scholes() #low value of k = T/M  

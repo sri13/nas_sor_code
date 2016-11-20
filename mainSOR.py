@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 """
-Coding Practices:
-All variables and functions are named in lower-case letters seperated by 
-underscores between words. e.g. `max_n_users`. 
-All Classes are usually named with CamelCase. e.g. `DatabaseConnection`.
+How to Execute:
+python mainSOR.py <input_file_name_optional> <output_file_name_optional>
 
+Authors:
+Niall Daly
+Ronan Mc.Donagh
+Srikanth Tiyyagura
 """
-
-
 
 #import modules
 import sys
@@ -32,28 +32,25 @@ def main():
         res_tol=1e-13
         matrix_x = processIO.np.zeros(dimension_n)
         
-        
         #Output processing
         if(len(sys.argv) >=3):
             output_filename = sys.argv[2]
         else:
-            output_filename = "nas_Sor.out" #="nas_Sor.out"
+            output_filename = "nas_Sor.out" 
         
-        #checks on A and B Matrix
+        #checks on Matrix A and Vector B 
         if(not validateMatrix.non_zero_diagonal_check(matrix_a,dimension_n)):
             raise Exception("Determinant check failed for Matrix A.",5)
     
         if(not validateMatrix.det_check(matrix_a)):
             raise Exception("Determinant check failed for Matrix A.",6)
             
-        if((not validateMatrix.col_diagonally_dominant(matrix_a,dimension_n)) and \
-            (not validateMatrix.row_diagonally_dominant(matrix_a,dimension_n))):
-            raise Exception("Matrix A wont converge as it is not row / column diagonally dominant.",6)
-       
+#        if((not validateMatrix.col_diagonally_dominant(matrix_a,dimension_n)) and \
+#            (not validateMatrix.row_diagonally_dominant(matrix_a,dimension_n))):
+#            If matrix is diagonally dominant, then no need to check spectral radius check
         if(not validateMatrix.spectral_radius_convergence_check(matrix_a)):
             raise Exception("Spectral radius check failed for Matrix A.",6)
-        
-        
+                
         #Dense SOR Calculation
 #       implementSOR.dense_SOR(matrix_a,vector_b,dimension_n,max_it,w,matrix_x)
         
@@ -75,4 +72,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()    
+    main()
