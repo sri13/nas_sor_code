@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 """
+Blackscholes.py is the mainfunction and dependent on SOR algorithm module
+Blackscholes is a model to give an estimate of European style options
+
 How to Execute:
 python blackScholes.py
 
@@ -9,7 +12,7 @@ Ronan Mc.Donagh
 Srikanth Tiyyagura
 """
 
-
+#import modules
 from math import ceil
 from mpl_toolkits.mplot3d import axes3d
 import matplotlib.pyplot as plt
@@ -72,6 +75,9 @@ def put_Black_Scholes(X=10, N=100, M=150, T=30, std=0.3, r=0.02, X_to_Smax = 0.5
     plt.show()
     
 def set_A(N, k, std, r):
+    '''
+        Creates matrix A for black scholas matrix and converts to csr format
+    '''
     A=[]
     for i in range(0, N-1):
         A_row = []        
@@ -85,15 +91,21 @@ def set_A(N, k, std, r):
             else:
                 A_row.append(0)
         A.append(A_row)
-#    print(to_csr(A))
+
     return processIO.to_csr_format(A)
 
 
 def set_alignment(X, k, r, std):
+    '''
+        alignment for vecto b to plot on graph 
+    '''    
     return 0.5 * k * X * ((std**2) - r)
 
 
 def init_b(X, N, X_to_Smax, alignment):
+    '''
+        Vector b intialisation
+    '''
     b = []
     N_threshold = ceil(N * X_to_Smax) #value of N where S = X
     for i in range(0, N_threshold):

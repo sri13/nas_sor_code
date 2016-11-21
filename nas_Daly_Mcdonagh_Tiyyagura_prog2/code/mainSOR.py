@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """
+Standalone program and calls other sub-modules to run Sparse SOR
+
 How to Execute:
 python mainSOR.py <input_file_name_optional> <output_file_name_optional>
 
@@ -16,6 +18,18 @@ import implementSOR
 import validateMatrix
 
 def main():
+    '''
+        main program that ignites the engine and connects all sub-parts
+        And also computes Pre-Check Stop Conditions for matrix :        
+        5 denotes "Zero on diagonal"
+        6 denotes "Cannot proceed"
+
+        Arguments:
+            Command line parameter 1 (sys.argv[1]) <optional> - Input filename
+            Command line parameter 2 (sys.argv[2]) <optional> - Output filename
+        Return:
+            None
+    '''
     
     try: 
         #Input Processing from input file
@@ -40,16 +54,16 @@ def main():
         
         #checks on Matrix A and Vector B 
         if(not validateMatrix.non_zero_diagonal_check(matrix_a,dimension_n)):
-            raise Exception("Determinant check failed for Matrix A.",5)
+            raise Exception("Zero element on diagonal found for Matrix A.",5)
     
         if(not validateMatrix.det_check(matrix_a)):
             raise Exception("Determinant check failed for Matrix A.",6)
             
-#        if((not validateMatrix.col_diagonally_dominant(matrix_a,dimension_n)) and \
-#            (not validateMatrix.row_diagonally_dominant(matrix_a,dimension_n))):
+        if((not validateMatrix.col_diagonally_dominant(matrix_a,dimension_n)) and \
+            (not validateMatrix.row_diagonally_dominant(matrix_a,dimension_n))):
 #            If matrix is diagonally dominant, then no need to check spectral radius check
-        if(not validateMatrix.spectral_radius_convergence_check(matrix_a)):
-            raise Exception("Spectral radius check failed for Matrix A.",6)
+                if(not validateMatrix.spectral_radius_convergence_check(matrix_a)):
+                    raise Exception("Spectral radius check failed for Matrix A.",6)
                 
         #Dense SOR Calculation
 #       implementSOR.dense_SOR(matrix_a,vector_b,dimension_n,max_it,w,matrix_x)

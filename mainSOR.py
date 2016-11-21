@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """
+MainSOR program connects remaning modules and serves as a start point
+
 How to Execute:
 python mainSOR.py <input_file_name_optional> <output_file_name_optional>
 
@@ -45,11 +47,11 @@ def main():
         if(not validateMatrix.det_check(matrix_a)):
             raise Exception("Determinant check failed for Matrix A.",6)
             
-#        if((not validateMatrix.col_diagonally_dominant(matrix_a,dimension_n)) and \
-#            (not validateMatrix.row_diagonally_dominant(matrix_a,dimension_n))):
+        if((not validateMatrix.col_diagonally_dominant(matrix_a,dimension_n)) and \
+            (not validateMatrix.row_diagonally_dominant(matrix_a,dimension_n))):
 #            If matrix is diagonally dominant, then no need to check spectral radius check
-        if(not validateMatrix.spectral_radius_convergence_check(matrix_a)):
-            raise Exception("Spectral radius check failed for Matrix A.",6)
+                if(not validateMatrix.spectral_radius_convergence_check(matrix_a)):
+                    raise Exception("Spectral radius check failed for Matrix A.",6)
                 
         #Dense SOR Calculation
 #       implementSOR.dense_SOR(matrix_a,vector_b,dimension_n,max_it,w,matrix_x)

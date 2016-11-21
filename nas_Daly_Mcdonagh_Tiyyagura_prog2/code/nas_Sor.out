@@ -1,2 +1,3 @@
 Stopping Reason                Max num of Iterations          Number of Iterations           Machine Epsilon                X Seq Tolerance                Residual Seq Tolerance        
-X Sequence divergence          50                             1                              2.220446049250313e-16          1e-13                          1e-13                         
+Cannot proceed                 50                             0                              2.220446049250313e-16          1e-13                          1e-13                         
+Spectral radius check failed for Matrix A.
